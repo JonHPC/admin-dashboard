@@ -19,6 +19,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { resources } from "@/config/resources";
 import TasksList from "@/pages/tasks/list";
+import TasksCreatePage from "@/pages/tasks/create";
+import TasksEditPage from "@/pages/tasks/edit";
 
 function App() {
   return (
@@ -64,8 +66,13 @@ function App() {
                       <Route path="new" element={<Create />} />
                       <Route path="edit/:id" element={<EditPage />} />
                     </Route>
-                    <Route path="/tasks">
-                      <Route index element={<TasksList />} />
+                    <Route path="/tasks" element={
+                      <TasksList>
+                        <Outlet />
+                      </TasksList>
+                    }>
+                      <Route path="new" element={<TasksCreatePage />} />
+                      <Route path="edit/:id" element={<TasksEditPage />} />
                     </Route>
                   </Route>
                 </Routes>
