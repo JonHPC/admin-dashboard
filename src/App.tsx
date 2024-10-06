@@ -6,7 +6,7 @@ import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
 import { authProvider, dataProvider, liveProvider } from "./providers";
-import { Home, ForgotPassword, Login, Register, CompanyList } from "./pages";
+import { Home, ForgotPassword, Login, Register, CompanyList, Create, EditPage } from "./pages";
 
 import routerBindings, {
   CatchAllNavigate,
@@ -18,6 +18,7 @@ import { createClient } from "graphql-ws";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { resources } from "@/config/resources";
+import TasksList from "@/pages/tasks/list";
 
 function App() {
   return (
@@ -58,7 +59,14 @@ function App() {
                     </Authenticated>
                   }>
                     <Route index element={<Home />} />
-                    <Route path="/companies" element={<CompanyList />} />
+                    <Route path="/companies">
+                      <Route index element={<CompanyList />} />
+                      <Route path="new" element={<Create />} />
+                      <Route path="edit/:id" element={<EditPage />} />
+                    </Route>
+                    <Route path="/tasks">
+                      <Route index element={<TasksList />} />
+                    </Route>
                   </Route>
                 </Routes>
                 <RefineKbar />
