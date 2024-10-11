@@ -1,25 +1,23 @@
+import React from "react";
 import { CreateButton, DeleteButton, EditButton, FilterDropdown, List, useTable } from "@refinedev/antd";
-import { getDefaultFilter, useGo } from "@refinedev/core";
+import { getDefaultFilter, useGo, type HttpError } from "@refinedev/core";
 import { Input, Space, Table } from "antd";
 import { COMPANIES_LIST_QUERY } from "@/graphql/queries";
 import { SearchOutlined } from "@ant-design/icons";
+import type { GetFieldsFromList } from "@refinedev/nestjs-query";
+import type { CompaniesListQuery } from "@/graphql/types";
 import CustomAvatar from "@/components/custom-avatar";
-import { Text } from "../../components/text";
-import { Company } from "@/graphql/schema.types";
+import { Text } from "@/components";
 import { currencyNumber } from "@/utilities";
-import { GetFieldsFromList } from "@refinedev/nestjs-query";
-import { CompaniesListQuery } from "@/graphql/types";
+
+type Company = GetFieldsFromList<CompaniesListQuery>;
 
 export const CompanyList = ({children}: React.PropsWithChildren) => {
  // useGo is used to navigate to a different path
   const go = useGo();
 
   // useTable hook, similar to useList, but with additional benefits
-  const { tableProps, filters } = useTable<
-  GetFieldsFromList<CompaniesListQuery>, 
-  HttpError,
-  GetFieldsFromList<CompaniesListQuery>>
-  ({
+  const { tableProps, filters } = useTable<Company, HttpError, Company>({
     resource: "companies",
     onSearch: (values) => {
       return [
@@ -86,13 +84,13 @@ export const CompanyList = ({children}: React.PropsWithChildren) => {
             dataIndex="name"
             title="Company Title"
             defaultFilteredValue={getDefaultFilter("id", filters)}
-            filterIcon={<SearchOutlined />}
-            filterDropdown={(...props) => (
-              <FilterDropdown {...props}>
-                <Input placeholder="Search Company" />
-              </FilterDropdown>
-          )}
-            render={(value, record) => (
+            // filterIcon={<SearchOutlined />}
+          //   filterDropdown={(...props) => (
+          //     <FilterDropdown {...props}>
+          //       <Input placeholder="Search Company" />
+          //     </FilterDropdown>
+          // )}
+            render={(_, record) => (
               <Space>
                 <CustomAvatar shape="square" name={record.name} src={record.avatarUrl} />
                 <Text style={{ whiteSpace: "nowrap"}}>
@@ -104,7 +102,7 @@ export const CompanyList = ({children}: React.PropsWithChildren) => {
           <Table.Column<Company>
             dataIndex="totalRevenue"
             title="Open deals amount"
-            render={(value, company) => (
+            render={(_, company) => (
               <Text>
                 {currencyNumber(company?.dealsAggregate?.[0].sum?.value || 0)}
               </Text>

@@ -12,12 +12,7 @@ type Props = {
   onAddClick?: (args: {id: string }) => void
 }
 
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
+
 export const KanbanColumn = ({
   children,
   id,
@@ -26,7 +21,7 @@ export const KanbanColumn = ({
   count,
   data,
   onAddClick
-}: React.PropsWithChildren) => {
+}: React.PropsWithChildren<Props>) => {
   // isOver - bool indicating a draggable element is hovering over the target
   // setNodeRef - fn to pass to the ref prop of the element you want to make droppable
   // active - object containing info about the draggable item currently being dragged
