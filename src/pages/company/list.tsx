@@ -7,13 +7,19 @@ import CustomAvatar from "@/components/custom-avatar";
 import { Text } from "../../components/text";
 import { Company } from "@/graphql/schema.types";
 import { currencyNumber } from "@/utilities";
+import { GetFieldsFromList } from "@refinedev/nestjs-query";
+import { CompaniesListQuery } from "@/graphql/types";
 
 export const CompanyList = ({children}: React.PropsWithChildren) => {
  // useGo is used to navigate to a different path
   const go = useGo();
 
   // useTable hook, similar to useList, but with additional benefits
-  const { tableProps, filters } = useTable({
+  const { tableProps, filters } = useTable<
+  GetFieldsFromList<CompaniesListQuery>, 
+  HttpError,
+  GetFieldsFromList<CompaniesListQuery>>
+  ({
     resource: "companies",
     onSearch: (values) => {
       return [
