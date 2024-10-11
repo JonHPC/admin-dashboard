@@ -14,7 +14,7 @@ import { KanbanColumnSkeleton, ProjectCardSkeleton } from "@/components";
 import { DragEndEvent } from "@dnd-kit/core";
 import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutations";
 
-const TasksList = ({children}):React.PropsWithChildren => {
+const TasksList = ({children}:React.PropsWithChildren) => {
   const { replace } = useNavigation();
 
   const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
@@ -70,6 +70,7 @@ const TasksList = ({children}):React.PropsWithChildren => {
 
     //If we do have the tasks
     const unassignedStage = tasks.data.filter((task) => task.stageId === null);
+
 
     const grouped: TaskStage[] = stages.data.map((stage) => ({
       ...stage,

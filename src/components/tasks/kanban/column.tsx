@@ -12,6 +12,12 @@ type Props = {
   onAddClick?: (args: {id: string }) => void
 }
 
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 export const KanbanColumn = ({
   children,
   id,
